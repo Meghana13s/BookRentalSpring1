@@ -1,0 +1,24 @@
+package com.hm.books.authservice.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class UserServiceImplTest {
+
+	@Test
+	void testSaveUser() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetAllUsers() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetUserByUsername() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.poc.book.info.model;
+
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+
+public class User {
+	
+
+	private List<String> bookName;
+	
+	
+
+}

@@ -1,0 +1,43 @@
+package com.hm.blogs.authservice.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hm.blogs.authservice.dto.JwtToken;
+import com.hm.blogs.authservice.dto.UserCredentials;
+import com.hm.blogs.authservice.model.User;
+import com.hm.blogs.authservice.service.SequenceGeneratorService;
+import com.hm.blogs.authservice.service.UserAuthService;
+import com.hm.blogs.authservice.service.UserService;
+
+@RestController
+@RequestMapping("/auth/public")
+public class UserAuthenticationController {
+	
+	@Autowired
+	private UserService service;
+	
+	@Autowired
+	private UserAuthService authService;
+	
+	@Autowired
+	private SequenceGeneratorService sequenceGeneratorService;
+	
+
+	@PostMapping("/user")
+	public User addUser(@RequestBody User user) {
+		user.setUserId(SequenceGeneratorService.generateSequence(user.SEQUENCE_NAME));
+		return service.saveUser(user);
+	}
+					
+	@PostMapping("/login")
+	public JwtToken login(@RequestBody UserCredentials credentials) {
+		return authService.validateCredentials(credentials);
+	}
+	
+}
+

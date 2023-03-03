@@ -1,0 +1,83 @@
+package com.hm.books.authservice.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.hm.books.authservice.exception.DuplicateUserNameException;
+import com.hm.books.authservice.model.User;
+import com.hm.books.authservice.repository.UserRepository;
+
+
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplTest {
+	
+	@Mock
+	private UserRepository repo;
+	
+	@InjectMocks
+	UserServiceImpl userServiceImpl;
+	
+	User user=new User();
+	List<User> findAll = new ArrayList<User>();
+	User user1=new User();
+	@BeforeEach
+	void setUp() {
+		user.setUserId(1);
+		user.setUsername("meghana");
+		user.setEmail("meg123@gmail.com");
+		user.setPassword("Password@13");
+		user.setConfirmPassword("Passworrd@13");
+		findAll.add(user);
+		
+		user1.setUsername("meghana");
+		findAll.add(user1);
+	}
+	
+
+	@Test
+	void testSaveUser() {
+		when(repo.save(Mockito.any())).thenReturn(user);
+		User saveUser = userServiceImpl.saveUser(user);
+		assertNotNull(saveUser);
+		assertEquals(user, saveUser);
+	}
+	
+	@Test
+	void testSaveUserException() {
+		when(repo.save(Mockito.any())).thenReturn(user);
+		User saveUser = userServiceImpl.saveUser(user);
+		assertThrows(DuplicateUserNameException.class,() -> {
+			userServiceImpl.saveUser(user1);
+		});
+	
+	}
+
+	@Test
+	void testGetAllUsers() {
+		when(repo.findAll()).thenReturn(findAll);
+		List<User> allUsers = userServiceImpl.getAllUsers();
+		assertNotNull(allUsers);
+	}
+
+	@Test
+	void testGetUserByUsername() {
+		when(repo.findUserByUsername(Mockito.any())).thenReturn(user);
+		User userByUsername = userServiceImpl.getUserByUsername(user.getUsername());
+		assertNotNull(userByUsername);
+		assertEquals(user.getUsername(), userByUsername.getUsername());
+		
+	}
+
+}

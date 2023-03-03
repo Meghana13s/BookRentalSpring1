@@ -1,0 +1,104 @@
+package com.poc.book.info.service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.poc.book.info.exception.BookExists;
+import com.poc.book.info.exception.BookNotFoundException;
+import com.poc.book.info.exception.NoDataFoundException;
+import com.poc.book.info.model.Book;
+import com.poc.book.info.model.BookRentDateDetails;
+import com.poc.book.info.model.User;
+import com.poc.book.info.repository.BookRepository;
+
+@Service
+public class BookServiceImpl implements BookService {
+	
+	@Autowired
+	private BookRepository repo;
+	
+
+	@Override
+	public String saveBook(Book book)  {
+		if(repo.existsById(book.getBookId())) {
+	        throw new BookExists("Employee with ID: "+book.getBookId()+" exsist");
+	    }
+		 repo.save(book);
+		 return "book details added successfully";
+	}
+
+	@Override
+	public List<Book> getAllBooks() {
+		List<Book> findAll = repo.findAll();
+		if(findAll.size() > 0) {
+			return findAll;
+		}
+		throw new NoDataFoundException("No books available");
+	}
+
+
+	@Override
+	public Book getBookById(long id) {
+		return repo.findById(id).orElseThrow(()->new BookNotFoundException("Book with ID: "+id +" not found"));
+	}
+
+	@Override
+	public String deleteBook(long id) {	
+		if(!repo.existsById(id)) {
+	        throw new BookNotFoundException("Book with ID: "+id+" not found");
+	    }
+		repo.deleteById(id);
+		return "book deleted with id : " + id;
+	}
+
+	@Override
+	public Book updateBook(Book book, long id) {
+		// TODO Auto-generated method stub
+		Book book1 = repo.findById(id).get();
+		book1.setBookId(id);
+		book1.setAuthorName(book.getAuthorName());
+		book1.setBookDescription(book.getBookDescription());
+		book1.setGenre(book.getGenre());
+		book1.setBookName(book.getBookName());
+		return repo.save(book1);
+	}
+
+	@Override
+	public List<Book> getBooksByGenre(String Genre) {
+		return repo.findByGenre(Genre);
+	}
+
+//	@Override
+//	public BookRentDateDetails addCart(long id) {
+//		BookRentDateDetails bookRentDateDetails = new BookRentDateDetails();
+//		Book book = repo.findById(id).get();
+//		bookRentDateDetails.setAuthorName(book.getAuthorName());
+//		bookRentDateDetails.setBookName(book.getBookName());
+//		bookRentDateDetails.setBorrowedDate(LocalDate.now());
+//		bookRentDateDetails.setDueDate(LocalDate.now().plusDays(7));
+//		return bookRentDateDetails;
+//	}
+	
+	@Override
+	public List<BookRentDateDetails> addCart(User user) {
+		List<BookRentDateDetails> bookRentalDetailsList = new ArrayList<>();
+		for(String bookName:user.getBookName()) {
+			addBooksToCart(bookName);
+		}
+		return bookRentalDetailsList;
+	}
+	
+	public BookRentDateDetails addBooksToCart(String bookName) {
+		BookRentDateDetails bookRentDateDetails = new BookRentDateDetails();
+		Book book = repo.findByBookName(bookName);
+		bookRentDateDetails.setAuthorName(book.getAuthorName());
+		bookRentDateDetails.setBookName(book.getBookName());
+		bookRentDateDetails.setBorrowedDate(LocalDate.now());
+		bookRentDateDetails.setDueDate(LocalDate.now().plusDays(7));
+		return bookRentDateDetails;
+	}
+}

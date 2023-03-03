@@ -1,0 +1,57 @@
+package com.hm.books.authservice.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hm.books.authservice.dto.JwtToken;
+import com.hm.books.authservice.dto.UserCredentials;
+import com.hm.books.authservice.model.User;
+import com.hm.books.authservice.service.SequenceGeneratorService;
+import com.hm.books.authservice.service.UserAuthService;
+import com.hm.books.authservice.service.UserService;
+
+@RestController
+@RequestMapping("/auth/public")
+public class UserAuthenticationController {
+	
+	@Autowired
+	private UserService service;
+	
+	@Autowired
+	private UserAuthService authService;
+	
+	@Autowired
+	private SequenceGeneratorService sequenceGeneratorService;
+	
+
+	@PostMapping("/user")
+	public User addUser(@RequestBody User user) {
+		user.setUserId(sequenceGeneratorService.generateSequence(user.SEQUENCE_NAME));
+		return service.saveUser(user);
+	}
+	
+	@GetMapping("/user/{userName}")
+	public User getUserByUserName(@PathVariable String userName) {
+		return service.getUserByUsername(userName);
+	}
+	
+	@GetMapping("/getAllUsers")
+	public List<User> getAllUsers() {
+		return service.getAllUsers();
+	}
+					
+	@PostMapping("/login")
+	public JwtToken login(@RequestBody UserCredentials credentials) {
+		return authService.validateCredentials(credentials);
+	}
+	
+}
+

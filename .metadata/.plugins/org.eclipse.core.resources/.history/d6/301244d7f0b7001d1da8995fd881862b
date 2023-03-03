@@ -1,0 +1,38 @@
+package com.poc.book.info.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.poc.book.info.exception.BookNotFoundException;
+import com.poc.book.info.exception.NoDataFoundException;
+import com.poc.book.info.model.Book;
+import com.poc.book.info.model.BookRentDateDetails;
+import com.poc.book.info.model.User;
+
+
+
+@Service
+public interface BookService {
+	
+	public String saveBook(Book book);
+	
+	public List<Book> getAllBooks() throws NoDataFoundException;
+	
+	public Book getBookById(long id) throws BookNotFoundException;
+	
+	public String deleteBook(long id) throws BookNotFoundException;
+	
+	public Book updateBook(Book book,long id);
+	
+	public List<Book> getBooksByGenre(String Genre);
+	
+	public List<BookRentDateDetails> addBooksToCart(String bookName);
+	
+//	public BookRentDateDetails addCart(long id);
+	
+//	public List<BookRentDateDetails> addCart(User user);
+	
+
+
+}

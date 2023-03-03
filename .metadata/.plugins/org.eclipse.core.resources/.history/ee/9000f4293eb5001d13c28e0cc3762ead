@@ -1,0 +1,16 @@
+package com.poc.book.info.model;
+
+import java.util.List;
+
+import jakarta.validation.constraints.Max;
+import lombok.Data;
+
+@Data
+public class User {
+	
+	@Max(value = 2)
+	private List<String> bookName;
+	
+	
+
+}

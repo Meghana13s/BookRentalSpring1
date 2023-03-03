@@ -1,0 +1,40 @@
+package com.hm.books.authservice.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.hm.books.authservice.repository.UserRepository;
+import com.poc.book.info.repository.BookRepository;
+import com.poc.book.info.service.BookServiceImpl;
+
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplTest {
+	
+	@Mock
+	private UserRepository repo;
+	
+	@InjectMocks
+	UserServiceImpl bookServiceImpl;
+
+	@Test
+	void testSaveUser() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetAllUsers() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetUserByUsername() {
+		fail("Not yet implemented");
+	}
+
+}

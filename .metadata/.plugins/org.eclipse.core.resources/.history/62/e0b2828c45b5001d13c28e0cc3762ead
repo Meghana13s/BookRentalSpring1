@@ -1,0 +1,24 @@
+package com.poc.book.info.model;
+
+import java.util.List;
+
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+import lombok.Data;
+
+@Data
+
+public class User {
+//	@Max(value = 2)
+//	private List<String> bookName;
+	
+	@Constraint(validatedBy = MaxSizeConstraintValidator.class)
+	public @interface MaxSizeConstraint {
+	    String message() default "The input list cannot contain more than 2 movies.";
+	    Class<?>[] groups() default {};
+	    Class<? extends Payload>[] payload() default {};
+	}
+	
+	}
+
+

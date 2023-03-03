@@ -1,0 +1,5 @@
+package com.hm.blogs.authservice.model;
+
+public class DatabaseSequence {
+
+}

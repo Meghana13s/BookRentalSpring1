@@ -1,0 +1,14 @@
+package com.hm.books.authservice.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class JwtToken {
+
+	private String value;
+	private String username;
+}

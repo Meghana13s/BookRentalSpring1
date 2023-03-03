@@ -1,0 +1,28 @@
+package com.hm.blogs.authservice.model;
+
+
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Document(collection = "userBookLogin")
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class User {
+	
+	@Id
+
+	private int userId;
+
+	private String username;
+	private String email;
+	private String password;
+	private String confirmPassword;
+}

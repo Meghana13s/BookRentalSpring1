@@ -1,0 +1,5 @@
+package com.poc.book.info.model;
+
+public class BookDetailsAndMessage {
+
+}

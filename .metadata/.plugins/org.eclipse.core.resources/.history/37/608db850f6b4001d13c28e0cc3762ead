@@ -1,0 +1,20 @@
+package com.poc.book.info.model;
+
+import java.sql.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor 
+public class BookRentDateDetails {
+	
+	private String bookName;
+	private String authorName;
+	private Date borrowedDate;
+	private Date issuedDate;
+
+}

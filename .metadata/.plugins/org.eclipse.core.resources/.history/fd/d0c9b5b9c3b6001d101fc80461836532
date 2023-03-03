@@ -1,0 +1,14 @@
+package com.hm.blogs.authservice.repository;
+
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.hm.blogs.authservice.model.User;
+
+public interface UserRepository extends MongoRepository<User,Integer> {
+	
+	public User findUserByUsername(String username);
+		
+	}
+
+

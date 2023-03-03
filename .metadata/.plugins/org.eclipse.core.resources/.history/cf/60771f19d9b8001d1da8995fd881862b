@@ -1,0 +1,5 @@
+package com.hm.books.authservice.exception;
+
+public class DuplicateUserName {
+
+}

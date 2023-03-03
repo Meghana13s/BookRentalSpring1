@@ -1,0 +1,118 @@
+package com.poc.book.info.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.poc.book.info.exception.NoDataFoundException;
+import com.poc.book.info.model.Book;
+import com.poc.book.info.repository.BookRepository;
+
+
+@ExtendWith(MockitoExtension.class)
+class BookServiceImplTest {
+	
+	@Mock
+	private BookRepository repo;
+	
+	@InjectMocks
+	BookServiceImpl bookServiceImpl;
+	
+	
+	Book book=new Book();
+	List<Book> findAll = new ArrayList<Book>();
+	
+	@BeforeEach
+	void setUp(){
+		book.setBookId(1);
+		book.setBookName("something I never told you");
+		book.setAuthorName("Shravya Bhinde");
+		book.setBookDescription("love story");
+		book.setGenre("non-fiction");
+		findAll.add(book);
+	}
+	
+	
+	@Test
+	void testSaveBook() {
+		String mess = "book details added successfully with id: "+book.getBookId();
+		when(repo.save(Mockito.any())).thenReturn(book);
+		String addBook = bookServiceImpl.saveBook(book);
+		assertNotNull(addBook);
+		assertEquals(mess, addBook);
+		
+	}
+
+	@Test
+	void testGetAllBooks() {
+		when(repo.findAll()).thenReturn(findAll);
+		List<Book> addBook = bookServiceImpl.getAllBooks();
+		assertNotNull(addBook);
+
+	}
+	
+	@Test
+	void testGetAllBooksException() {
+		List<Book> findAll = new ArrayList<Book>();
+		when(repo.findAll()).thenReturn(findAll);
+		assertThrows(NoDataFoundException.class,() -> {
+			bookServiceImpl.getAllBooks();
+		});
+
+	}
+
+//	@Test
+//	void testGetBookById() {
+//		when(repo.findById(Mockito.any())).thenReturn(book);
+//		
+//	}
+	
+
+	@Test
+	void testDeleteBook() {
+		String del = "book deleted with id : " +book.getBookId();
+		when(repo.existsById(Mockito.any())).thenReturn(true);
+		String deleteBook = bookServiceImpl.deleteBook(book.getBookId());
+		verify(repo, times(1)).deleteById(book.getBookId());
+		assertEquals(del, deleteBook);
+	}
+	
+	@Test
+	void testDeleteBookException() {
+		String del = "book deleted with id : " +book.getBookId();
+		when(repo.existsById(Mockito.any())).thenReturn(true);
+		bookServiceImpl.deleteBook(book.getBookId());
+		verify(repo, times(1)).deleteById(book.getBookId());
+	
+//
+//	@Test
+//	void testUpdateBook() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	void testGetBooksByGenre() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	void testAddBookToCart() {
+//		fail("Not yet implemented");
+//	}
+//
+
+}

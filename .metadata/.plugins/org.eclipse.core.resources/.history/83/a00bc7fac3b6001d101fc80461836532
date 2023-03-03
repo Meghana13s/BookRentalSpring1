@@ -1,0 +1,16 @@
+package com.hm.books.authservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+
+public class BooksAuthServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BlogsAuthServiceApplication.class, args);
+	}
+	
+
+}
