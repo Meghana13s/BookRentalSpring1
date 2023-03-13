@@ -10,7 +10,11 @@ import com.hm.books.authservice.model.User;
 import com.hm.books.authservice.repository.UserRepository;
 import com.hm.books.authservice.util.JwtUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
+
 public class UserAuthService {
 	
 	
@@ -32,9 +36,10 @@ public class UserAuthService {
 		String jwt = jwtUtil.generateJwt(user.getUsername());
 		
 		JwtToken jwtToken = new JwtToken(jwt,username);
-		
+		log.info("successfully generated jwt token for the user:"+jwtToken.getUsername());
 		return jwtToken;
 		
-	}
+	
 
+	}
 }

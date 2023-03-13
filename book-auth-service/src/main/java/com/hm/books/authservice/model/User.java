@@ -24,7 +24,7 @@ public class User {
 	
 	@Id
 	private long userId;
-	//@Indexed(unique = true)
+	@Indexed(unique = true)
 	private String username;
 	private String email;
 	private String password;

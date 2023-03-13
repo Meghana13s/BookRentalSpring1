@@ -33,9 +33,8 @@ public class AuthFilter implements Filter {
 		HttpServletRequest httpRequest=(HttpServletRequest) request;  // typecasting servelt request to httpServelt request
 		
 		if(httpRequest.getRequestURI().startsWith("/auth/public")) {
-			System.out.println("Filter Intercepted the Request 2");
+			System.out.println("Filter Intercepted the Request 1"); 
 			chain.doFilter(httpRequest, response);
-			System.out.println("Filter Intercepted the Request 3");
 			return;
 		}
 		

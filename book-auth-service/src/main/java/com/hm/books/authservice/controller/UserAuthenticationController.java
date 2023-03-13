@@ -40,7 +40,7 @@ public class UserAuthenticationController {
 			user.setUserId(sequenceGeneratorService.generateSequence(user.SEQUENCE_NAME));
 
 		} catch (Exception e) {
-			System.out.println("Jindgdg");
+			System.out.println("Username is duplicated");
 		}
 		return service.saveUser(user);
 	}
